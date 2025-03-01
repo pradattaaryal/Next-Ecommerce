@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator"
 
 export default function ProductsFilter() {
   return (
-    <Card className="sticky top-4 my-3">
+    <Card className="  my-3">
       <CardHeader>
         <CardTitle>Filters</CardTitle>
       </CardHeader>
