@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator"
 
 export default function ProductsFilter() {
   return (
-    <Card className="  my-3">
+    <Card className="hidden md:block  my-3">
       <CardHeader>
         <CardTitle>Filters</CardTitle>
       </CardHeader>
