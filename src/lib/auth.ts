@@ -12,7 +12,10 @@ import { schema } from "@/lib/schema";
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter,
   providers: [
-    GitHub,
+    GitHub({
+    clientId: process.env.AUTH_GITHUB_ID,
+    clientSecret: process.env.AUTH_GITHUB_SECRET,
+  }),
     Credentials({
       credentials: {
         email: {},
