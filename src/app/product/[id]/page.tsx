@@ -47,7 +47,8 @@ export default function ProductPage() {
     };
 
     fetchProduct();
-  }, [id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id,productId]);
   if (!product) return (<ProductPageSkeleton/>);
 
   return (

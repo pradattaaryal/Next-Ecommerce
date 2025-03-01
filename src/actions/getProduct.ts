@@ -19,7 +19,7 @@ export async function fetchAllProducts(page: number = 1, pageSize: number =2) {
       totalProducts,
       totalPages: Math.ceil(totalProducts / pageSize),
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching products:", error);
     throw new Error("Failed to fetch products");
   }

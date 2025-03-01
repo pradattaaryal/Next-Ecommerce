@@ -19,6 +19,7 @@ export async function POST(request: Request) {
     }
 
     // Create line items for Stripe
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const lineItems = cartItems.map((item: any) => ({
       price_data: {
         currency: 'usd',
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
     // Create a Checkout Session
  
 // Create a Checkout Session with optional email
+// eslint-disable-next-line react-hooks/exhaustive-deps
 const sessionConfig: any = {
     payment_method_types: ['card'],
     line_items: lineItems,
@@ -73,10 +75,10 @@ const sessionConfig: any = {
   
   const session = await stripe.checkout.sessions.create(sessionConfig);
     return NextResponse.json({ sessionId: session.id, url: session.url });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating checkout session:', error);
     return NextResponse.json(
-      { error: error.message },
+      { error  },
       { status: 500 }
     );
   }

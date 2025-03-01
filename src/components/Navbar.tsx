@@ -7,7 +7,7 @@ import { auth } from "@/lib/auth";
 import CartIcon from "./ui/CartIcon.tsx";
 
 export default async function Navbar() {
-  const session = await auth(); // Ensure async handling
+  const session = await auth(); 
 
   return (
     <header className="sticky top-0 z-50 w-full flex align-middle justify-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

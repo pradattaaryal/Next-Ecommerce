@@ -9,7 +9,7 @@ const generateFileName = (bytes = 32) => crypto.randomBytes(bytes).toString("hex
 const s3Client = new S3Client({
   region: process.env.AWS_BUCKET_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY!,
+    accessKeyId: process.env.AWS_ACCESS_KEYY!,
     secretAccessKey: process.env.AWS_SECERATE_KEY!,
   },
 })

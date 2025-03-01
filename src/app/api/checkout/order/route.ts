@@ -22,10 +22,10 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json(session);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error retrieving checkout session:', error);
     return NextResponse.json(
-      { error: error.message },
+      { error },
       { status: 500 }
     );
   }

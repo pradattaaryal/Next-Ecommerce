@@ -18,8 +18,7 @@ import {
  import {
   Form,
   FormControl,
-  FormDescription,
-  FormField,
+   FormField,
   FormItem,
   FormLabel,
   FormMessage,
@@ -134,7 +133,7 @@ export default function ProductForm() {
         form.reset();
          console.log("Product added successfully!");
        } else {
-         throw new Error(result.message);
+         throw new Error();
        }
 
 

@@ -29,7 +29,7 @@ export async function addProduct(productData: {
     revalidatePath("/products");
 
     return { success: true, message: "Product added successfully!" };
-  } catch (error:any) {
-    return { success: false, message: error.message };
+  } catch (error:unknown) {
+    return { success: false, message: error  };
   }
 }
