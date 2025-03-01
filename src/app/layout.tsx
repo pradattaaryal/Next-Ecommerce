@@ -7,6 +7,13 @@ import "./globals.css";
 export const metadata = {
   title: "Modern E-commerce",
   description: "A modern e-commerce website built with Next.js",
+  icons: {
+    icon: [
+      { url: "/favicon.png", sizes: "48x48" },
+      { url: "/favicon.png", sizes: "96x96" },
+      { url: "/favicon.png", sizes: "144x144" },
+    ],
+  },
 };
 
 export default function RootLayout({

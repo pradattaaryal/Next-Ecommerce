@@ -1,7 +1,6 @@
  
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+ 
 import { ThemeToggle } from "@/components/theme-toggle";
 import SignInButton from "@/components/SignInButton";
 import { auth } from "@/lib/auth";
@@ -22,7 +21,9 @@ export default async function Navbar() {
           </Link>
           <ThemeToggle />
           {!session && <SignInButton />}
-          <CartIcon /> {/* Render CartIcon here */}
+            <Link href="/cart" className="text-sm font-medium hover:underline">
+            <CartIcon /> {/* Render CartIcon here */}
+            </Link>
         </nav>
       </div>
     </header>

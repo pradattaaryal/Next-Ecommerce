@@ -1,65 +1,37 @@
 "use client"
 
-import { useState } from "react"
-import Image from "next/image"
+ import Image from "next/image"
 import Link from "next/link"
 import { MinusIcon, PlusIcon, ShoppingBag, Trash2 } from "lucide-react"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-
-interface CartItem {
-  id: string
-  name: string
-  price: number
-  quantity: number
-  image: string
-}
+ import {   removeFromCart ,updateQuantity} from "@/store/cartSlice";
+import CheckoutButton from "@/components/CheckoutButton"
 
 export default function CartPage() {
-  const cartItemCount = useSelector((state: RootState) =>
-    state.cart.items 
-  );
-  console.log(cartItemCount)
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: "1",
-      name: "Premium Wireless Headphones",
-      price: 249.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-      id: "2",
-      name: "Organic Cotton T-Shirt",
-      price: 29.99,
-      quantity: 2,
-      image: "/placeholder.svg?height=100&width=100",
-    },
-    {
-      id: "3",
-      name: "Smart Fitness Watch",
-      price: 199.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=100&width=100",
-    },
-  ])
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
 
-  const updateQuantity = (id: string, newQuantity: number) => {
-    if (newQuantity < 1) return
-    setCartItems(cartItems.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
-  }
+  const updateQuantityy = (id: string, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    if (newQuantity > 0) {
+      dispatch(updateQuantity({ productId: id, quantity: newQuantity }));
+    } else {
+      dispatch(updateQuantity({ productId: id, quantity: newQuantity }));
+    }
+  };
 
   const removeItem = (id: string) => {
-    setCartItems(cartItems.filter((item) => item.id !== id))
-  }
+    dispatch(removeFromCart(id));
+  };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const shipping = 9.99
-  const tax = subtotal * 0.08
-  const total = subtotal + shipping + tax
+  const subtotal = cartItems.reduce((sum, item) => sum + item.Product.listPrice * item.quantity, 0);
+  const shipping = cartItems.length > 0 ? 9.99 : 0;
+  const tax = subtotal * 0.08;
+  const total = subtotal + shipping + tax;
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -81,28 +53,28 @@ export default function CartPage() {
           <div className="md:col-span-2">
             <div className="space-y-4">
               {cartItems.map((item) => (
-                <Card key={item.id} className="overflow-hidden">
+                <Card key={item.Product.id} className="overflow-hidden">
                   <CardContent className="p-6">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div className="flex-shrink-0">
                         <Image
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.name}
+                          src={item.Product.images || "/placeholder.svg"}
+                          alt={item.Product.name}
                           width={100}
                           height={100}
                           className="rounded-md object-cover"
                         />
                       </div>
                       <div className="flex-1 space-y-2">
-                        <h3 className="font-medium text-lg">{item.name}</h3>
-                        <p className="text-muted-foreground">Unit Price: ${item.price.toFixed(2)}</p>
+                        <h3 className="font-medium text-lg">{item.Product.name}</h3>
+                        <p className="text-muted-foreground">Unit Price: ${item.Product.listPrice.toFixed(2)}</p>
                         <div className="flex items-center gap-4">
                           <div className="flex items-center border rounded-md">
                             <Button
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8 rounded-none"
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              onClick={() => updateQuantityy(item.Product.id, item.quantity - 1)}
                             >
                               <MinusIcon className="h-4 w-4" />
                               <span className="sr-only">Decrease quantity</span>
@@ -112,7 +84,7 @@ export default function CartPage() {
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8 rounded-none"
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              onClick={() => updateQuantityy(item.Product.id, item.quantity + 1)}
                             >
                               <PlusIcon className="h-4 w-4" />
                               <span className="sr-only">Increase quantity</span>
@@ -122,14 +94,14 @@ export default function CartPage() {
                             variant="ghost"
                             size="icon"
                             className="text-destructive"
-                            onClick={() => removeItem(item.id)}
+                            onClick={() => removeItem(item.Product.id)}
                           >
                             <Trash2 className="h-4 w-4" />
                             <span className="sr-only">Remove item</span>
                           </Button>
                         </div>
                       </div>
-                      <div className="font-semibold text-right">${(item.price * item.quantity).toFixed(2)}</div>
+                      <div className="font-semibold text-right">${(item.Product.listPrice * item.quantity).toFixed(2)}</div>
                     </div>
                   </CardContent>
                 </Card>
@@ -170,13 +142,11 @@ export default function CartPage() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full">Proceed to Checkout</Button>
-              </CardFooter>
+              <CheckoutButton />              </CardFooter>
             </Card>
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }
-

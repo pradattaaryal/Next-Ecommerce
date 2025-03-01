@@ -1,10 +1,10 @@
 "use client"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { product } from "@/types/product";
+import { productread } from "@/types/product";
 
 // Define the type for a cart item
 export interface CartItem {
-  Product: product;
+  Product: productread;
   quantity: number;
 }
 

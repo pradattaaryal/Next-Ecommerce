@@ -2,8 +2,7 @@
 
  
 import Image from "next/image"
-import x from '@/images/x.jpg'
- 
+  
 
 interface ImageGalleryProps {
   images: string 
