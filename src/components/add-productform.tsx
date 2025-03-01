@@ -92,7 +92,7 @@ export default function ProductForm() {
     try {
       let mainImageURL = '';
       if (values.mainImage && values.mainImage.length > 0) {
-       // const signedURLResult = await getSignedURL();
+       const signedURLResult = await getSignedURL();
 
         if (signedURLResult.failure !== undefined) {
           console.error(signedURLResult.failure);
